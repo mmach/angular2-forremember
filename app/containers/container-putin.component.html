@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="form-group container">
+        
+        <div class="form-group row">
+            <div *ngIf="container?.amount">
+                <label class="col-md-4 control-label">Amount left [&mu;l]</label>
+                <div class="col-md-8" style="text-align:right">
+                    <label>{{container?.amount}}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-4 control-label" for="locatoionDestinations">To Location:</label>
+            <div class="col-md-8">
+                <select name="destination-freezer" class="form-control" [(ngModel)]="destinationFreezer" (ngModelChange)="loadRacks()" validationModel='{ "id":"model.destinationFreezer", "required":true }'>
+                    <option *ngFor="let freezer of freezers" [ngValue]="freezer">{{freezer.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row" [hidden]="container?.containerTypeID !== 3">
+            <label class="col-md-4">Select rack for vail</label>
+            <div class="col-md-7">
+                <bootstrap-switch onChange="toRackChange()"></bootstrap-switch>
+            </div>
+        </div>
+
+        <div *ngIf="toRack">
+
+            <div class="form-group row">
+                <label class="col-md-6 control-label">
+                    <input type="radio" name="rackSource" (change)="rackFromFreezer()" value="rackFromFreezer" checked>
+                    from given freezer
+                </label>
+                <label class="col-md-6 control-label">
+                    <input type="radio" name="rackSource" (change)="rackFromMagazine()" value="rackFromMagazine">
+                    new - from magazine
+                </label>
+            </div>
+
+            <div class="form-group row" *ngIf="rackFromFreezerValue">
+                <label class="col-md-3">barcode</label>
+                <div class="col-md-9">
+                    <select name="destination-freezer-rack" class="form-control" [(ngModel)]="destinationFreezerRack" (ngModelChange)="loadOccupancyForRack()" [disabled]="!freezerRacks.length" 
+                        [customValidationFunction]="destinationFreezerRackValidation" validationModel='{ "id":"model.destinationFreezerRack", "customValidationResultText": "Field is required." }'>
+                        <option disabled [selected]="!freezerRacks.length" [hidden]="freezerRacks.length">There are no racks in freezer</option>
+                        <option *ngFor="let rack of freezerRacks" [ngValue]="rack">{{rack.barCode}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="rackFromMagazineValue">
+                <label class="col-md-3">barcode</label>
+                <div class="col-md-9">
+                    <autocomplete #containerBarcode [initialValue]="'rc'" [allowedPrefixes]="['rc']" query='rc' (change)="onContainerBarcodeChange($event);" 
+                        [customValidationFunction]="destinationMagazineRackValidation" validationModel='{ "id":"model.destinationMagazineRack", "customValidationResultText": "Field is required." }'>rc</autocomplete>
+                </div>
+            </div>
+
+            <div class="form-group row disabled">
+                <div class="col-md-12">
+                    <layout-map-view [layoutMap]="layoutMapForRack" 
+                        [customValidationFunction]="positionValidation" validationModel='{ "id":"model.position", "customValidationResultText": "Field is required." }'></layout-map-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

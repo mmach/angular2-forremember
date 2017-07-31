@@ -1,0 +1,47 @@
+﻿<div class="container-fluid">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 container">
+        <form class="form-horizontal" (ngSubmit)="addContainersRange()">
+            <fieldset>
+                <legend>Add Bulk of New Containers</legend>
+                <preloader></preloader>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width">Type</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <select name="container-type" class="form-control" [(ngModel)]="containersRange.containerType" (ngModelChange)="onContainerTypeChange()" validationModel='{ "id":"containerType", "required":true }'>
+                            <option *ngFor="let type of containerTypes" [ngValue]="type">{{type.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width">Start barcode</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <input name="start-barcode" type="text" class="form-control" 
+                        [(ngModel)]="containersRange.startBarCode" 
+                        (ngModelChange)="BarcodeChange(containersRange.startBarCode)" 
+                        validationModel='{ "id":"startBarCode", "required":"true", "maxLength":"16", "minLength":"16" }'>
+                    </div>
+                </div>
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width">End barcode</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <input name="end-barcode" type="text" class="form-control" 
+                        [(ngModel)]="containersRange.endBarCode" 
+                        (ngModelChange)="BarcodeChange(containersRange.endBarCode)" 
+                        validationModel='{ "id":"endBarCode", "required":"true", "maxLength":"16", "minLength":"16" }'>
+                    </div>
+                </div>
+
+                <div class="form-group right-button-group">
+                    <button (click)="cancel()" type="button" class="btn btn-secondary" style="margin-left: 10px;">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Bulk</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+

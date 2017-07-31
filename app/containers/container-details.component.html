@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <div class="form-group container">
+
+        <div class="form-group row">
+            <label class="col-md-3 control-label label-bold">Barcode</label>
+            <div class="col-md-9">
+                <span style="font-weight: 900;">{{container?.barCode}}</span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 control-label label-bold">Type</label>
+            <div class="col-md-9">
+                {{container?.containerType?.name}}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 control-label label-bold">Location</label>
+            <div class="col-md-9">
+                {{container?.getFullLocationCaption()}}
+            </div>
+        </div>
+
+        <div *ngIf="container?.compound">
+            <div class="form-group row">
+                <label class="col-md-3 control-label label-bold">Concept ID</label>
+                <div class="col-md-9">
+                    {{container?.compound?.conceptID}}
+                    <a *ngIf="container?.compound?.concept?.conceptText" style="padding-left: 0px" class='btn btn-link' (click)="onFastaButtonClick(container.compound.concept.conceptText, container.compound.concept.name)">
+                         FASTA
+                    </a>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 control-label label-bold">Amount [&mu;l]</label>
+                <div class="col-md-9">
+                    {{container?.getAmountFullCaption()}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 control-label label-bold">Purity [%]</label>
+                <div class="col-md-9">
+                    {{container?.compound?.purity}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 control-label label-bold">Production date</label>
+                <div class="col-md-9">
+                    {{productionDate.toLocaleDateString()}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 control-label label-bold">Expiration date</label>
+                <div class="col-md-9">
+                    {{expirationDate.toLocaleDateString()}}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 control-label label-bold">Custom properties</label>
+                <div class="col-md-9" *ngIf='!customProperties?.length'>
+                    No custom properties
+                </div>
+            </div>
+
+            <div class="form-group row" [hidden]='!customProperties?.length'>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <custom-properties></custom-properties>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="showLayoutMap">
+            <div *ngIf="parentContainer">
+                <div class="form-group row">
+                    <label class="col-md-3 control-label label-bold">Parent rack</label>
+                    <div class="col-md-9">
+                        {{parentContainer.barCode}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 control-label label-bold">Position in rack</label>
+                    <div class="col-md-9">
+                        {{container.position}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-8">
+                    <layout-map-view [layoutMap]="layoutMap"></layout-map-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

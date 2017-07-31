@@ -1,0 +1,8 @@
+<div aria-hidden="true" class="overlayWrapperBackgroud" style="display: none;">
+</div>
+<div class="overlayWrapperPanel" [style.width]="width + 'px'" [style.left]="isLeftSided ? '-' + width + 'px' : windowInnerWidth + 'px'">
+    <div style="cursor: pointer;padding-bottom: 30px;" (click)="closeOverlayPanel()">
+        <i class="material-icons  {{isLeftSided ? 'pull-xs-right' : 'pull-xs-left'}} " [style.transform]="isLeftSided ? 'rotate(270deg)' : 'rotate(90deg)'">expand_less</i>
+    </div>
+    <div [style.overflow-y]="isRightSided && 'scroll'" [style.height]="isRightSided && '100%'"><ng-content ></ng-content></div>    
+</div>

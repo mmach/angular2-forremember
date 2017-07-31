@@ -1,0 +1,206 @@
+<div class="col-md-6 col-md-offset-3">
+    <div>
+        <div class="fade in active" id="single" role="tabpanel">
+            <h2>Split compound into new container</h2>
+            <br/>
+            <form style="border-top-color: #666666; border-top-style: solid; border-top-width: 1px">
+                <br />
+                <fieldset [disabled]="isInputDisabled">
+
+                    <legend>Properties of current container</legend>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">
+                            <strong>Concept ID:</strong>
+                        </label>
+                        <div class="col-md-3">
+                            {{ container.compound.concept.name }}
+
+                            <a style="padding-left: 0px" class='btn btn-link' (click)="onFastaButtonClick(container.compound.concept.conceptText,container.compound.concept.name)">
+                                FASTA
+                            </a>
+                        </div>
+
+                        <label class="col-md-3 form-control-label">
+                            <strong>Amount [μl]:</strong>
+                        </label>
+                        <div class="col-md-3">
+                            {{ container.amount}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label"><strong>Location:</strong></label>
+                        <div class="col-md-3">
+                            Out of freezer
+                        </div>
+
+                        <label class="col-md-3 control-label"><strong>Purity [%]:</strong></label>
+                        <div class="col-md-3"> {{container.compound.purity}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">
+                            <strong>Container type:</strong>
+                        </label>
+                        <div class="col-md-3">
+                            {{container.containerType.name}}
+                        </div>
+                        <label class="col-md-3 control-label">
+                            <strong>Production date:</strong>
+                        </label>
+                        <div class="col-md-3">
+                            {{prodDate}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label"> <strong>Container barcode:</strong></label>
+                        <div class="col-md-3">
+                            {{ container.barCode}}
+                        </div>
+                        <label class="col-md-3 control-label">
+                            <strong>Expiration date:</strong>
+                        </label>
+                        <div class="col-md-3">
+                            {{expDate}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label"><strong>Amount left [μl]:</strong></label>
+                        <div class="col-md-3">
+                            {{amountLeft().toFixed(1)}}
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <form style="border-top-color: #666666; border-top-style: solid;border-top-width: 1px ">
+                <br />
+
+                <fieldset [disabled]="isInputDisabled">
+                    <legend>Properties of new container</legend>
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">
+                             Target location:
+                         </label>
+                        <div class="col-md-9">
+                            <select class="form-control" style="min-width: 220px" 
+                                [(ngModel)]="targetFreezer" name="targetFreezer" style="height: 38px"
+                                (ngModelChange)="onTargetFreezerChange()" 
+                                validationModel='{ "id":"model.FreezerID" , "required":true }' title="{{targetFreezer.fullPath}}">
+                                 <option *ngFor="let freezer of freezers" [ngValue]="freezer">{{freezer.name}}</option>
+                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">
+                             Target container type:
+                         </label>
+                        <div class="col-md-9">
+                            <select class="form-control" [(ngModel)]="targetContainerType" name="targetContainerType" validationModel='{ "id":"model.targetContainerType", "required":true }'
+                                (ngModelChange)="onTargetContainerTypeChange()">
+                                 <option *ngFor="let containerType of containerTypes" [ngValue]="containerType">{{containerType.name}}</option>
+                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <label class="col-md-3 control-label"> Target container barcode:</label>
+                        <div class="col-md-3">
+                            <autocomplete #containerBarcode [allowedPrefixes]="['vl', 'pl']" (change)="onContainerBarcodeChange($event);" validationModel='{ "id":"model.containerBarcode" }'></autocomplete>
+                        </div>
+                        <label class="col-md-3 form-control-label">
+                             Amount [μl]:
+                         </label>
+                        <div class="col-md-3">
+                            <number-input name="model.Amount" [(ngModel)]="model.Amount" validationModel='{ "id":"model.amount" }'></number-input>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="targetContainerType && targetContainerType.containerTypeID === 3">
+                        <label class="col-md-3">Select rack for vial</label>
+                        <div class="col-md-3">
+                            <bootstrap-switch [defaultValue]="targetRackRequired" [onChange]="onSelectRackChange"></bootstrap-switch>
+                        </div>
+                        <!--<div class="form-group row">
+                            <div class="col-md-3 checkbox">
+                                <label>
+                                         <input type="checkbox" 
+                                            [(ngModel)]="targetRackRequired" name="targetRackRequired" (ngModelChange)="RackRequired()" value="">
+                                         rack:
+                                     </label>
+                            </div>
+                            <div *ngIf="targetRackRequired && selectedContainerType && selectedContainerType['containerTypeID']=== 3">
+                                <div class="col-md-3">
+                                    <autocomplete #parentContainerBarcode [allowedPrefixes]="['rc']" [initialValue]="'rc'" (change)="onParentContainerBarcodeChange($event);"
+                                        validationModel='{ "id":"model.parentContainerBarcode" }'></autocomplete>
+                                </div>
+
+                            </div>
+                        </div>-->
+                    </div>
+                    <div *ngIf="targetRackRequired && targetContainerType && targetContainerType.containerTypeID === 3">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-md-offset-3 control-label">
+                                    <input type="radio" name="rackSource" (change)="onRackSourceChange(1)" value="rackFromFreezer" [attr.checked]="rackFromFreezer ? true : null">
+                                    from given freezer
+                                </label>
+                            <label class="col-md-3 control-label">
+                                    <input type="radio" name="rackSource" (change)="onRackSourceChange(2)" value="rackFromMagazine" [attr.checked]="rackFromMagazine ? true : null">
+                                    new - from magazine
+                                </label>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label">
+                                Rack barcode:
+                            </label>
+
+                            <div class="col-md-6" *ngIf="rackFromFreezer">
+                                <!--Temporary implemented in a such way because of bug in Angular RC5 -->
+                                <select class="form-control" *ngIf="freezerRacks.length === 0" disabled>
+                                    <option disabled selected>There are no racks in freezer</option>
+                                </select>
+                                <select class="form-control"  *ngIf="freezerRacks.length > 0"
+                                    [(ngModel)]="destinationFreezerRack" name="destinationFreezerRack"
+                                    (ngModelChange)="loadOccupancyForRack()" [disabled]="!freezerRacks.length"
+                                    [customValidationFunction]="destinationFreezerRackValidation" 
+                                    validationModel='{ "id":"model.destinationFreezerRack", "customValidationResultText": "Field is required." }'>
+                                    <!--<option disabled [selected]="!freezerRacks.length" [hidden]="freezerRacks.length">There are no racks in freezer</option>-->
+                                    <option *ngFor="let rack of freezerRacks" [ngValue]="rack">{{rack.barCode}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6" *ngIf="rackFromMagazine">
+                                <autocomplete #parentContainerBarcode [allowedPrefixes]="['rc']" [customValidationFunction]="validateContainerRackBarcode"
+                                    [initialValue]="'rc'" [transitionId]="1" (change)="onParentContainerBarcodeChange($event);" validationModel='{ "id":"targetRackBarcode", "required":true, "customValidationResultText": "Field is required." }'></autocomplete>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="targetRackRequired && targetContainerType && targetContainerType.containerTypeID === 3" class="form-group row">
+                        <label class="col-md-3 control-label">
+                                 Specify vial position in rack:
+                             </label>
+                        <div class="col-md-6">
+                            <layout-map-view validationModel='{ "id":"model.position" }' [layoutMap]="layoutMap"></layout-map-view>
+                        </div>
+                    </div>
+                    <br />
+                    <div *ngIf="targetContainerType && targetContainerType.containerTypeID === 1" class="form-group row">
+                        <label class="col-md-3 control-label">
+                                 Specify well in plate:
+                        </label>
+                        <div class="col-md-6">
+                            <layout-map-view validationModel='{ "id":"model.position" }' [layoutMap]="layoutMap"></layout-map-view>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button (click)="splitAndAddNewContainer()" type="button" class="btn btn-primary">Submit and add new conainer</button>
+                        <button (click)="splitCompound()" type="button" class="btn btn-primary">Submit</button>
+                        <button (click)="onCancelButton()" type="button" class="btn btn-secondary">Cancel</button>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

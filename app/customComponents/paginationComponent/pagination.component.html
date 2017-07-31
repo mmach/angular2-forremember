@@ -1,0 +1,22 @@
+﻿<div class="paginationBar" id="paginationBar">
+    <div class="navigationButtons">
+        <button [disabled]="info.isFirst" (click)="showFirstPage()"><<</button>
+        <button [disabled]="info.isFirst" (click)="showPreviousPage()"><</button>
+        <input name="current-page-number" type="text" class="currentPageNumber"
+               [(ngModel)]="info.currentPage" (keyup.enter)="gotoPage()"/>
+        <button [disabled]="info.isLast" (click)="showNextPage()">></button>
+        <button [disabled]="info.isLast" (click)="showLastPage()">>></button>
+
+        <select class="form-control" name="currentPageSize"
+            [(ngModel)]="currentPageSize"
+            (ngModelChange)="onPageSizeChange()">
+            <option *ngFor="let pageSize of pageSizes" [ngValue]="pageSize">{{pageSize}}</option>
+        </select>
+        <span>items per page</span>
+    </div>
+
+    <p class="ContainerPageingLegend">{{info.itemType}} {{info.startItem}}-
+        {{info.endItem}}
+        out of {{info.totalItemsNumber}}
+    </p>            
+</div>

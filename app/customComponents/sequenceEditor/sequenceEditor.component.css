@@ -1,0 +1,14 @@
+.sequenceEditorValidatedContent{
+    min-height:35px;
+    border: 1px solid #ccc;
+    border-radius: .25rem;    
+}
+.sequenceEditorValidatedContent:hover{
+    border: 1px solid rgb(102, 175, 233);
+}
+.codeMirrorHighlighted{
+    color : red; 
+    font-weight: bolder;
+    font-size: 20px;
+    background-color: indigo;
+}

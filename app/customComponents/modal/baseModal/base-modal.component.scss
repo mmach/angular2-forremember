@@ -1,0 +1,20 @@
+.modal-body {
+    word-break: break-word;
+    overflow-y: auto;
+}
+
+.small-text {
+    .modal-body {
+        font-size: 10px;
+        height: 500px;
+    }
+}
+
+.warning-icon {
+	font-size: 18px;
+	color: orange;
+}
+
+.has-warning{
+    border-color: #f0ad4e;
+}

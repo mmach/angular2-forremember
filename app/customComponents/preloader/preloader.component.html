@@ -1,0 +1,5 @@
+<div id="preloader" [style.opacity]="opacity" [style.visibility]="hideDomElement?'hidden':'visible'" [class.preloader-transition]="!instant" (transitionend)="onTransitionEnd()">
+	<svg id="animated-element" width="400" height="300" preserveAspectRatio="xMidYMin">
+        <svg:circle *ngFor="let circle of circles" [attr.cx]="circle.x" [attr.cy]="circle.y" [attr.r]="circle.r" fill="rgba(2, 117, 216, 0.2)"/>
+    </svg>
+</div>

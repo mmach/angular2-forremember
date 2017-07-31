@@ -1,0 +1,13 @@
+.container-fluid {
+    position: relative;
+    padding-top: 40px;
+}
+body, html {
+    height: 100%;
+}
+.label-bold {
+    font-weight: 600;
+}
+.modal{
+    z-index: 1051;
+}

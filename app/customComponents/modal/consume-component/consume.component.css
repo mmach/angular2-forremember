@@ -1,0 +1,16 @@
+﻿.align-right {
+    text-align: right;
+}
+
+.label-bold {
+    font-weight: 600;
+}
+
+.amount-taken {
+    width: 75px;
+    float: right;
+}
+
+.amount-taken input {
+    text-align: right;    
+}

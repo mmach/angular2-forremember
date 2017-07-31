@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <form class="form-horizontal" (ngSubmit)="onSubmit()">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Register</legend>
+
+                <br />
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Email</label>
+                    <div class="col-md-4">
+                        <input name="email-input" type="text" placeholder="Email" class="form-control input-md" [(ngModel)]="model.email" validationModel='{ "id":"model.email", "required":true }'>
+                    </div>
+                </div>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Name</label>
+                    <div class="col-md-4">
+                        <input name="name-input" type="text" placeholder="Name" class="form-control input-md" [(ngModel)]="model.name" validationModel='{ "id":"model.name", "required":true }'>
+                    </div>
+                </div>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Surname</label>
+                    <div class="col-md-4">
+                        <input name="surname-input" type="text" placeholder="Surname" class="form-control input-md" [(ngModel)]="model.surname" validationModel='{ "id":"model.surname", "required":true }'>
+                    </div>
+                </div>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Role</label>
+                    <div class="col-md-4">
+                        <select class="form-control" [(ngModel)]="model.roleId" name="role" validationModel='{ "id":"model.roleId", "required":true }'>
+                                    <option *ngFor="let role of roles" [value]="role.roleID">{{ role.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Location</label>
+                    <div class="col-md-4">
+                        <select class="form-control" [(ngModel)]="model.locationId" name="office" validationModel='{ "id":"model.locationId", "required":true }'>
+                                    <option *ngFor="let office of offices" [value]="office.locationID">{{ toPath(office) }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Password</label>
+                    <div class="col-md-4">
+                        <input name="password-input" type="password" placeholder="Password" class="form-control input-md" [(ngModel)]="model.password"
+                            validationModel='{ "id":"model.password", "required":true }'>
+                    </div>
+                </div>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Confirm Password</label>
+                    <div class="col-md-4">
+                        <input name="password-confirm-input" type="password" placeholder="Confirm Password" class="form-control input-md" [(ngModel)]="model.confirmPassword"
+                            validationModel='{ "id":"model.confirmPassword", "required":true }'>
+                    </div>
+                </div>
+                <div class="form-group container">
+                    <label class="col-md-4 control-label">Confirm</label>
+                    <div class="col-md-4">
+                        <label><input name="confirm-input" type="checkbox" [(ngModel)]="model.confirm" validationModel='{ "id":"model.confirm", "required":true, "requiredResultText" : "Agreement is mandatory." }' />&nbsp;I agree to the terms of service</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <button name="singlebutton" name="singlebutton" class="btn btn-primary" [disabled]="registerButtonDisabled">Register</button>
+                        <button (click)="cancel()" type="button" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
+            </fieldset>
+            <br />
+        </form>
+
+
+    </div>
+    <div class="col-md-2"></div>
+</div>

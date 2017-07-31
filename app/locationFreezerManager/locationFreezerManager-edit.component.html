@@ -1,0 +1,65 @@
+﻿<div class="container-fluid">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <form class="form-horizontal" (ngSubmit)="onSubmit()">
+            <fieldset>
+                
+                <div *ngIf="showControls">
+                    <legend *ngIf="isLocationEdit && !isOfficeUpdate">Location Edit <br /> <p class="locationAddLegnd" style="font-size:12pt;">You are here: {{name}} </p> </legend>
+                    <legend *ngIf="isLocationEdit && isOfficeUpdate">Office Edit <br /> <p class="locationAddLegnd" style="font-size:12pt;">You are here: {{name}} </p> </legend>
+                    <legend *ngIf="!isLocationEdit">Freezer Edit</legend>
+
+                    <div *ngIf="isLocationEdit">
+                        <div class="form-group container">
+                            <label class="col-md-4 control-label" for="inputLocationName">Name</label>
+                            <div class="col-md-4">
+                                <input id="inputLocationName" name="input-location-name" type="text" placeholder="Name" class="form-control input-md" [(ngModel)]="selectedLocation.name" validationModel='{ "id":"name", "required":true }'>
+                            </div>
+                        </div>
+
+                        <div class="form-group container" *ngIf="isOfficeUpdate">
+                            <label class="col-md-4 control-label" for="inputLocationAddress">Address</label>
+                            <div class="col-md-4">
+                                <input id="inputLocationAddress" name="input-location-address" type="text" placeholder="Address" class="form-control input-md" [(ngModel)]="selectedLocation.address" validationModel='{ "id":"address", "required":true }'>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!isLocationEdit">
+                        <div class="form-group container">
+                            <label class="col-md-4 control-label" for="inputFreezerName">Name</label>
+                            <div class="col-md-4">
+                                <input id="inputFreezerName" name="input-freezer-name" type="text" placeholder="Name" class="form-control input-md" [customValidationFunction]="validateName" [(ngModel)]="selectedFreezer.name" validationModel='{ "id":"name", "required":true, "customValidationResultText": "Freezer with such a name already exists in this office" }'>
+                            </div>
+                        </div>
+
+                        <div class="form-group container">
+                            <label class="col-md-4 control-label" for="inputFreezerTemperature">Temperature</label>
+                            <div class="col-md-4">
+                                <input id="inputFreezerTemperature" name="input-freeezer-temperature" type="text" placeholder="Temperature" class="form-control input-md" [(ngModel)]="selectedFreezer.temperature" [customValidationFunction]="validateTemperature" validationModel='{ "id":"temperature", "required":true }'>
+                            </div>
+                        </div>
+
+                        <div class="form-group container">
+                            <label class="col-md-4 control-label" for="inputFreezerCapacity">Capacity</label>
+                            <div class="col-md-4">
+                                <input id="inputFreezerCapacity" name="input-freezer-capacity" type="text" placeholder="Capacity" class="form-control input-md" [(ngModel)]="selectedFreezer.capacity" [customValidationFunction]="validateCapacity" validationModel='{ "id":"capacity", "required":true }'>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <button class="btn btn-primary">Update</button>
+                            <button (click)="cancel()" type="button" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+

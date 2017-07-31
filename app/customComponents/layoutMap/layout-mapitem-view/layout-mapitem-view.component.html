@@ -1,0 +1,6 @@
+<div [ngStyle]="wrapperDOMSyle" style="cursor: pointer" (mouseenter)="highlight(true)" (mouseleave)="highlight(false)" (click)="onMapItemClick()">
+    <div style="width: 90%; margin: 0 auto;" [ngStyle]="layoutMapItem.DOMStyle">
+        <span *ngIf="layoutMapItem.itemText && layoutMapItem.itemText != ''">{{layoutMapItem.itemText}}</span>
+        <span *ngIf="!layoutMapItem.itemText || layoutMapItem.itemText == ''">&nbsp;</span>
+    </div>
+</div>

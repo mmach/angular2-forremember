@@ -1,0 +1,190 @@
+#concepts-list-wrapper {
+	position: relative;
+}
+
+#conceptsTable{
+    min-height:320px;
+    margin: 30px 0 0 0;
+}
+
+.odd {
+    background-color: rgba(2, 117, 216, 0.09);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.full {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.content-full {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/*.concepts {
+    margin: 30px 0 0 0;
+}*/
+
+/*.concepts-table {
+    margin: 30px 0 0 0;
+    min-height:320px;
+}*/
+
+.btn-action {
+    background-color: lightskyblue;
+    color: black;
+}
+
+.registered {
+    background-color: lightgreen;
+}
+
+.disabled {
+    background-color: buttonface;
+    border: transparent;
+    color: gray;
+}
+
+/* Scrollable table styles */
+.table tr {
+    width: 100%;
+    display: inline-table;
+}
+.table{
+   /* height:300px; */
+}
+.table tbody{
+    overflow-y: auto;
+    height: 400px;
+    width: 100%;
+    position: absolute;
+}
+.table td {
+    vertical-align: middle;
+}
+.table tfoot { position: absolute; width: 100%; }
+
+.paginationBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(2, 117, 216, 0.09);
+    width: 100%;
+    height: 50px;
+}
+
+.navigatioButtons {
+    width: 400px;
+    display: block;
+    margin: auto;
+}
+
+.currentPageNumber {
+    width: 30px;
+}
+
+.navigatioButtons button {
+    border: none;
+    color: #373a3c;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    font-size: 15pt;
+    border-radius: 5px;
+}
+
+.navigatioButtons input {
+    text-align: center;
+    border-radius: 5px;
+    width: 51px;
+    height: 40px;
+    margin: 4px 2px;
+    vertical-align: top;
+}
+
+p.ConseptsPageingLegend {
+    font-size: 15pt;
+    color: black;
+    position: absolute;
+    right: 30px;
+    bottom: 0;
+    top: 11px;
+    align-items: center;
+}
+
+
+
+.registeANProduce:hover{
+    background-color:rgba(8, 121, 158, 0.69);    
+}
+
+.registeANProduce.registered:hover{
+    background-color:#4abb4a;
+}
+
+.conceptsListErrorLine i{
+    float:right;
+    cursor:pointer;
+}
+#filter-panel-header {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin: 10px;
+    margin-right: 20px;
+}
+
+#filter-panel-content {
+    clear: right;
+    display: inline-block;
+    float: right;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.filter-panel-content-contracted {
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(1, 0, 0, 1);
+}
+
+.filter-panel-content-expanded {
+    max-height: 500px;
+    transition: max-height 0.5s cubic-bezier(1, 0, 0, 1);
+}
+
+#filter-panel-input {
+    clear: right;
+    display: inline-block;
+    float: right;
+    margin: 10px;
+}
+
+#filter-panel-buttons {
+    clear: right;
+    display: inline-block;
+    float: right;
+    margin: 10px;
+}
+
+#refresh-icon {
+    font-size: 14pt;
+    vertical-align: middle;
+}
+
+ .disabled {
+    background-color: white;
+    border: transparent;
+    color: gray;
+}
+
+ .action-dropdown-correction {
+    top: -105px !important;
+}

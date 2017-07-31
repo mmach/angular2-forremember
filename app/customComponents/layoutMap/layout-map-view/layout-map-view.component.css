@@ -1,0 +1,14 @@
+ul
+{
+	list-style-type: none;
+}
+
+.tree-branch-header
+{
+	cursor: pointer;
+}
+
+.add-location-icon
+{
+	float:right;
+}

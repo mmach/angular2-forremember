@@ -1,0 +1,66 @@
+﻿.paginationBar {
+    /*position: ;*/
+    /*bottom: 0;
+    left: 0;*/
+    /*background-color:  rgba(2, 117, 216, 0.09);;*/
+    width: 100%;
+    height: 50px;
+    border-top: 3px solid #eceeef;
+}
+
+.navigationButtons {
+    padding-top: 5px;
+    width: 560px;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.currentPageNumber {
+    width: 30px;
+}
+
+.navigationButtons button {
+    border: none;
+    color: #373a3c;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    font-size: 15pt;
+    border-radius: 5px;
+}
+
+.navigationButtons input {
+    text-align: center;
+    border-radius: 5px;
+    width: 51px;
+    height: 40px;
+    margin: 4px 2px;
+    vertical-align: top;
+}
+
+.navigationButtons select {
+    width: 80px;
+    display: inline-block;
+    height: 40px;
+    top: -2px;
+    position: relative;
+    margin-left: 20px;
+}
+
+p.ContainerPageingLegend {
+    font-size: 15pt;
+    color: #000000;
+    position: absolute;
+    right: 30px;
+    bottom: 0;
+    top: 11px;
+    align-items: center;
+}
+
+button[disabled=disabled], button:disabled {
+    color: #ccc !important;
+    cursor: not-allowed;
+}

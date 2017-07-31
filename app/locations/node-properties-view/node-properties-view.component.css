@@ -1,0 +1,7 @@
+.locationDetails {
+    position: relative;
+    display: block;
+    margin-bottom: .75rem;
+    background-color: #f7f7f7;
+    border-radius: .25rem;
+}

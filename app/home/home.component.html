@@ -1,0 +1,38 @@
+﻿<div class="container theme-showcase" role="main">
+
+    <div class="jumbotron">
+
+        <h1 *ngIf="isProductionEnvironment && !isAuthenticated">Welcome in Life Science Lab!</h1>
+
+        <h1 *ngIf="!isProductionEnvironment && !isAuthenticated">Welcome in Life Science Lab DEV!</h1>
+
+        <h1 *ngIf="isAuthenticated">
+            Welcome {{ authenticatedUserName }}!<br />
+            Witaj | Добро пожаловать | Hoşgeldin | Запрашаем
+        </h1>
+        <br />
+        <h4 *ngIf="isAuthenticated">
+            This application will help you to manage the containers, locations and samples in the laboratory.
+        </h4>
+        <h4 *ngIf="!isAuthenticated">
+            Please <a [routerLink]="['login']" style="font-weight:bold">login</a> or <a [routerLink]="['register']" style="font-weight:bold">register</a> if you don't have account yet!
+        </h4>
+
+    </div>
+
+    <div style="background-color: #eceeef">
+        <div class="col-lg-4">
+            <h2>Locations</h2>
+            <p>Find the information about all locations available in the system. Locations tree contains information about country, city, building and particular freezer. You can create new or edit existing location or freezer.</p>
+        </div>
+        <div class="col-lg-4">
+            <h2>Containers</h2>
+            <p>View the list of all containers available in the system. Select container using searching functionality. A new container, or a batch of containers by providing bar codes range.</p>
+        </div>
+        <div class="col-lg-4">
+            <h2>Concepts</h2>
+            <p>View the list of all concepts created in system. You can create a new concept and register existing one.</p>
+        </div>
+    </div>
+
+</div>

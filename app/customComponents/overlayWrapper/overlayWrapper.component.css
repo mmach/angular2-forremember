@@ -1,0 +1,24 @@
+.overlayWrapperBackgroud{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    background-color: #e8f2fc;
+    opacity: 0;
+}
+
+.overlayWrapperPanel{
+    transition: right 0.3s;
+    z-index: 1051;
+    position: fixed;
+    top: 55px;
+    bottom: 0;
+    overflow: hidden;
+    background: #e8f2fc;
+    border-radius: .25rem;
+    border: 1px solid #ccc;
+}

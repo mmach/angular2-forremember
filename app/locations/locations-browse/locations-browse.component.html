@@ -1,0 +1,17 @@
+<div class="col-md-2">
+</div>
+<div class="col-md-4">
+    <h3><strong>Locations tree</strong></h3>
+    <hr />
+    <tree-view id="tree-view" [countries]="countries"></tree-view>
+    <preloader style="display: block; position: relative; top: 50px"></preloader>
+</div>
+
+<div class="col-md-4">
+    <h3><strong>Location details</strong></h3>
+    <hr />
+    <node-properties-view [locationData]="locationData" [nodeType]="nodeType">
+    </node-properties-view>
+</div>
+<div class="col-md-2">
+</div>

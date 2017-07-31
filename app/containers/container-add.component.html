@@ -1,0 +1,38 @@
+﻿<div class="container-fluid">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 container">
+        <form class="form-horizontal" (ngSubmit)="addContainer()">
+            <fieldset>
+                <legend>Add New Container</legend>
+                
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width"> Type</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <select class="form-control" 
+                            [(ngModel)]="newContainer.containerType" name="newContainer.containerType" 
+                            (ngModelChange)="onContainerTypeChange()" validationModel='{ "id":"containerType", "required":true }'>
+                            <option *ngFor="let type of containerTypes" [ngValue]="type">{{type.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width">Barcode</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <input type="text" class="form-control" 
+                            [(ngModel)]="newContainer.barCode" name="newContainer.barCode"
+                            (ngModelChange)="BarcodeChange()" 
+                            validationModel='{ "id":"barCode", "required":"true", "maxLength":"16", "minLength":"16" }'>
+                    </div>
+                </div>
+
+                <div class="form-group right-button-group">                     
+                    <button (click)="cancel()" type="button" class="btn btn-secondary" style="margin-left: 10px;">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>

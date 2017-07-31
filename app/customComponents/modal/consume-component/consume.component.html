@@ -1,0 +1,33 @@
+﻿<form class="form-horizontal">
+    <fieldset>
+        <div>
+            <label class="col-md-8 control-label label-bold">Amount (original) [&mu;l]</label>
+            <div class="col-md-4 align-right">
+                {{ amountOriginalString }}
+            </div>
+        </div>
+
+        <div>
+            <label class="col-md-8 control-label label-bold">Amount taken [&mu;l]</label>
+            <div class="col-md-4">
+                <number-input name="amountTakenString" class="amount-taken align-right" style="float:right" [(ngModel)]="amountTakenString" (change)="onAmountTakenChanged($event)" validationModel='{ "id":"model.amount", "min":"0.1", "max":"{{ amountOriginal }}", "required":"true", "resultDivWidth":"180px" }'></number-input>
+            </div>
+        </div>
+
+        <div>
+            <label class="col-md-8 control-label label-bold ">Amount left [&mu;l]</label>
+            <div class="col-md-4 align-right ">
+                <label>{{ amountLeftString }}</label>
+            </div>
+        </div>
+
+        <div>
+            <label class="col-md-12 control-label label-bold ">Reason:</label>
+        </div>
+
+        <div class="col-md-12 ">
+            <textarea class="form-control " placeholder="Please provide the reason " validationModel='{ "id":"model.reason", "required":"true" }'
+                [(ngModel)]="reason " name="reason "></textarea>
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,10 @@
+<input name="autocomplete" #input 
+    type="text" class="form-control" 
+    [(ngModel)]="query" (keyup)="onInputKeyUp($event)" 
+    autocomplete="off"> <!-- disables the browser autocomplete -->
+<ul id="list-group" class="list-group group-list" *ngIf="filteredList.length > 0">
+    <li *ngFor="let item of filteredList" [class.active]="item.selected" [id]="item.selected" class="list-group-item item-list" (click)="select(item)">
+        {{ item.name }}
+    </li>
+    <li *ngIf="isResultLimitExceeded" class="list-group-item item-list" style="background-color:#f5f5f5">more results found...</li>
+</ul>

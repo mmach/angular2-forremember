@@ -1,0 +1,19 @@
+<label name="select-all" *ngIf="layoutMap.showSelectAllCheckbox"><input type="checkbox" [(ngModel)]="layoutMap.selectAll" />&nbsp;Select All</label>
+<table border="1" style="width: 100%">
+    <tr>
+        <td style="text-align:center">
+            {{currentPositionHTML}}
+        </td>
+        <td [ngStyle]="indexColumn.DOMStyle" *ngFor="let indexColumn of indexColumns">
+            {{indexColumn.innerHTML}}
+        </td>
+    </tr>
+    <tr [ngStyle]="row.DOMStyle" *ngFor="let row of rows; let rowIndex = index">
+        <td [ngStyle]="indexRows[rowIndex].DOMStyle">
+            {{indexRows[rowIndex].innerHTML}}
+        </td>
+        <td [ngStyle]="column.DOMStyle" *ngFor="let column of columns; let columnIndex = index">
+            <layout-mapitem-view (cellChange)="cellChange($event)" (cellSelected)="cellSelected($event)" (cellUnSelected)="cellUnSelected($event)" (cellMouseLeave)="cellMouseLeave($event)" [layoutMapItem]="layoutMapItemMatrix[columnIndex][rowIndex]" data-toggle="tooltip" title="{{layoutMapItemMatrix[columnIndex][rowIndex].toolTipHTML}}"></layout-mapitem-view>
+        </td>
+    </tr>
+</table>

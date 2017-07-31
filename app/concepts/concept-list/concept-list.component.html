@@ -1,0 +1,91 @@
+<div id="concepts-list-wrapper" >
+    <overlay-wrapper>
+        <div style="width:90%;margin-left:5%">
+                <div>
+                    <label>ID/sequence: </label>
+                    <input #input class="form-control" type="text" name="searchText" 
+                        [(ngModel)]='searchText' placeholder="ID/sequence...">
+                    <br>
+                    <label>Type: </label>
+                    <select class="form-control" name="conceptTypeIdFilter"
+                        [(ngModel)]="conceptTypeIdFilter" style="height:38px">
+                        <option [ngValue]=0>All types</option>
+                        <option [ngValue]=1>RNA</option>
+                        <option [ngValue]=3>DNA</option>
+                        <option [ngValue]=2>Protein</option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <button class="btn btn-primary" type="button" (click)="search(input.value, 0)">Apply filter</button>
+                    <button class="btn btn-secondary" type="button" (click)="resetFilters()">Clear</button>
+            </div>
+        </div>
+    </overlay-wrapper>
+
+    <div id="buttons-panel">
+        <a class='btn btn-info' (click)="openFilterPanel($event)">Filter</a>
+        <a class="btn btn-primary" (click)="addConcept()">Add a new concept</a>
+    </div>   
+
+    <div class='panel panel-primary concepts-table'>
+
+        <div class='table-responsive' id="conceptsTable">
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th style="width:14%">ID</th>
+                        <th style="width:10%">Type</th>
+                        <th style="width:10%">Sequence</th>
+                        <th style="width:10%">State</th>
+                        <th style="width:14%">Registered by</th>
+                        <th style="width:14%">Registered at</th>
+                        <th style="width:14%"><a class='btn' style="padding:0; vertical-align:bottom;" (click)="toggleSortUpdateTime()">
+                            <b>Last Modified {{sortUpdateTimeMarker}} </b></a>
+                        </th>
+                        <th style="width:5%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <preloader></preloader>
+                    <tr *ngIf='concepts && concepts.length===0'>No results</tr>
+                    <tr *ngFor='let concept of concepts; let isOdd=odd; let isEven=even'
+                        [class.odd]="isOdd"
+                        [class.even]="isEven">
+                        <td style="width:14%">{{concept.name}}</td>
+                        <td style="width:10%" ng-class-odd="'odd''" ng-class-even="'even'">{{getConceptTypeNameByID(concept.conceptTypeID)}}</td>
+                        <td style="width:10%">
+                            <a style="padding-left: 0px"  class='btn btn-link' (click)="onFastaButtonClick(concept.conceptText, concept.name)">
+                                FASTA
+                            </a>
+                        </td>
+                        <td style="width:10%">{{getStatusName(concept.registered)}}</td>
+                        <td style="width:14%">{{getUserNameByID(concept.registeredBy)}}</td>
+                        <td style="width:14%">{{concept.registerTime && getDate(concept.registerTime)}}</td>
+                        <td style="width:14%">{{getDate(concept.updateTime)}}</td>
+
+                        <td style="width:5%">
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="dropDown($event)">
+                                    Action
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1" [ngClass]="{'action-dropdown-correction': doCorrectActionDropdown }">
+                                    <button class="dropdown-item "  (click)='doAction(concept)'>{{getActionName(concept.registered)}}</button>
+                                    
+                                    <button class="dropdown-item" [disabled]="concept.registered ? 'disabled' : ''" 
+                                            [class.disabled]="concept.registered" (click)='editConcept(concept.conceptID)'>Edit</button>
+                                    <button class="dropdown-item" [disabled]="concept.registered ? 'disabled' : ''" 
+                                            [class.disabled]="concept.registered" (click)='deleteConcept(concept)'>Delete</button>
+                                    
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <pagination-component [info]='pageInfo' (sendData)="getData($event)"></pagination-component>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

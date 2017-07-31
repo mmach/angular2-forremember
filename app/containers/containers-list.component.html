@@ -1,0 +1,149 @@
+<div id="containers-list-wrapper">
+    <overlay-wrapper>
+        <div style="width:90%;margin-left:5%">
+            <div>
+                <label>Location: </label>
+                <select name="locationFilter" class="form-control" [(ngModel)]="locationFilter" style="height:38px">
+                        <option *ngFor="let filterItem of locationFilterItems" [class.label-bold]="!filterItem.freezer" [ngValue]="filterItem">{{filterItem.getName()}}</option>
+                    </select>
+                <br>
+                <label>Expiration: </label>
+                <select name="expirationFilter" [(ngModel)]="expirationFilter" class="form-control" style="height:38px">
+                        <option [ngValue]=0 selected>All</option>
+                        <option [ngValue]=1>Expired</option>
+                        <option [ngValue]=2>Not expired</option>
+                    </select>
+                <br>
+                <label>Used up: </label>
+                <select name="usedUpFilter" [(ngModel)]="usedUpFilter" class="form-control" style="height:38px">
+                        <option [ngValue]=0 selected>All</option>
+                        <option [ngValue]=1>Used up</option>
+                        <option [ngValue]=2>Not used up</option>
+                    </select>
+                <br>
+                <label>Container Type: </label>
+                <select name="containerTypeFilter" id="container-type-filter" class="form-control" [(ngModel)]="containerTypeFilter">
+                        <option [ngValue]=0 selected>All</option>
+                        <option [ngValue]=1>Plate with wells</option>
+                        <option [ngValue]=2>Rack</option>
+                        <option [ngValue]=3>Vial</option>
+                    </select>
+                <br>
+                <label>Barcode/Sequence: </label>
+                <input name="search-text" #input class="form-control" type="text" [(ngModel)]='searchText' placeholder="Enter barcode/sequence..."
+                    (keydown)="onSearchInputSubmit($event)">
+            </div>
+            <br>
+            <div>
+                <button class="btn btn-primary" type="button" (click)="search(input.value, 0)">Apply filter</button>
+                <button class="btn btn-secondary" type="button" (click)="resetFilters()">Clear</button>
+            </div>
+        </div>
+    </overlay-wrapper>
+
+    <div id="buttons-panel">
+        <a class='btn btn-info' (click)="openFilterPanel($event)">Filter</a>
+        <a class='btn btn-primary' [routerLink]="['/addcontainer']">Add new container</a>
+        <a class='btn btn-primary' [routerLink]="['/addrangecontainer']">Add bulk of new containers</a>
+    </div>
+
+    <div class='panel panel-primary containers-table'>
+
+        <div class='table-responsive' id="containersTable">
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th style="width:10%">Barcode</th>
+                        <th style="width:15%">Container Type</th>
+                        <th style="width:10%">Compound ID</th>
+                        <th style="width:10%">Amount [μl]</th>
+                        <th style="width:20%">Location</th>
+                        <th style="width:10%"><a class='btn' style="padding:0; vertical-align:bottom;" (click)="toggleSortExpirationDate()">
+                            <b>Expiration Date {{sortExpirationDateMarker}} </b></a>                        
+                        </th>
+                        <th style="width:15%"><a class='btn' style="padding:0; vertical-align:bottom;" (click)="toggleSortUpdateTime()">
+                            <b>Last Modified {{sortUpdateTimeMarker}} </b></a>
+                        </th>
+                        <th style="width:10%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf='containers && containers.length === 0'>No results</tr>
+                    <tr *ngFor='let container of containers; let isOdd=odd; let isEven=even' [class.odd]="isOdd" [class.even]="isEven">
+                        <td style="width:10%">
+                            <a class='btn btn-link' style="padding-left: 0px" (click)="showDetails($event,container)">
+                                {{container.barCode}}
+                            </a>
+                        </td>
+                        <td style="width:15%" ng-class-odd="'odd''" ng-class-even="'even'">{{container.containerType.name}}</td>
+                        <td style="width:10%">{{container.compound && container.compound.concept.name}}</td>
+                        <td style="width:10%">{{container.getAmountCaption()}}</td>
+                        <td style="width:20%">
+                            <a class='btn btn-link' style="padding-left: 0px" (click)="onLocationClick(container.getFullLocationCaption(), container.barCode, container.containerType.name)">
+                                {{container.getLocationCaption()}}
+                            </a>
+                        </td>
+                        <td style="width:10%" [class.container-expired]="container.isExpired">
+                            {{ container.expirationDate }}
+                        </td>
+                        <td style="width:15%" >
+                            {{ getDate(container.updateTime) }}
+                        </td>
+                        <td style="width:10%">
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" (click)="dropDown($event)">
+                                    Action
+                                </button>
+                                <div id="actionMenu" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1" [ngClass]="{'action-dropdown-correction': doCorrectActionDropdown }">
+                                    <button class="dropdown-item" [disabled]="!isChangeContainerLocationActionEnabled(container)" [class.disabled]="!isChangeContainerLocationActionEnabled(container)"
+                                        (click)='move(container)'>
+                                        Change container location
+                                    </button>
+                                    <button class="dropdown-item" [disabled]="!isSplitCompoundActionEnabled(container)" [class.disabled]="!isSplitCompoundActionEnabled(container)"
+                                        (click)='!splitCompound(container)'>
+                                        Split compound
+                                    </button>
+                                    <button class="dropdown-item" [disabled]="!isTakeContainerOutActionEnabled(container)" [class.disabled]="!isTakeContainerOutActionEnabled(container)"
+                                        (click)='!takeOutContainer(container)'>
+                                        Take container out
+                                    </button>
+                                    <button class="dropdown-item" [disabled]="!isConsumeCompoundActionEnabled(container)" [class.disabled]="!isConsumeCompoundActionEnabled(container)"
+                                        (click)="!onConsumeCompoundDropdownAction(container)">
+                                        Consume Compound
+                                    </button>
+                                    <button class="dropdown-item" [disabled]="!isPutContainerInFreezerActionEnabled(container)" [class.disabled]="!isPutContainerInFreezerActionEnabled(container)"
+                                        (click)='putInContainer(container)'>
+                                        Put in a freezer
+                                    </button>
+                                    <button class="dropdown-item" (click)='delete(container)'>Delete container</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <preloader></preloader>
+                </tbody>
+                <tfoot>
+                    <pagination-component [info]='pageInfo' (sendData)="getContainers($event)"></pagination-component>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<base-modal width="550" modalToShow="consume" (onConfirmEvent)="onConsumeCompoundConfirmed()">
+    <consume-component></consume-component>
+</base-modal>
+
+<base-modal width="600" modalToShow="takeOutContainer" (onConfirmEvent)="takeOutContainerConfirm()">
+    <container-takeout></container-takeout>
+</base-modal>
+
+<base-modal width="600" modalToShow="putInContainer" (onConfirmEvent)="putInContainerConfirm()">
+    <container-putin></container-putin>
+</base-modal>
+
+<overlay-wrapper OverlayWrapperPosition="right">
+    <container-details></container-details>
+</overlay-wrapper>

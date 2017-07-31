@@ -1,0 +1,70 @@
+table
+{
+    border: none;    
+}
+
+th
+{
+    border-top: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(236, 238, 239); 
+    padding-left: 0;
+    font-weight: normal;
+}
+
+td
+{
+    border-top: none;
+    border-bottom: none;
+    padding-left: 0;
+}
+
+div 
+{
+    margin-left: 0px;
+	margin-right: 0px;
+    padding-left: 0px;
+	padding-right: 0px;
+}
+
+/*.odd {
+    background-color: rgba(2, 117, 216, 0.09);
+}*/
+
+.hidden {
+    visibility: hidden;
+}
+
+.full {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.content-full {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-data-padding 
+{
+	margin-left: 0px;
+    padding-left: 0px;	
+}
+
+.left-data-width
+{
+    width:30%;
+}
+
+.right-data-padding
+{	
+	padding-right: 0px;
+}
+
+.right-data-width
+{
+    width: 70%;
+}

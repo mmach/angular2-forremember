@@ -1,0 +1,12 @@
+<div  *ngIf="messageType=='error'" class="alert alert-danger " >
+    <a  class="close" (click)="hide()" aria-label="close">&times;</a>
+    <strong>Error </strong> {{message}}
+</div>
+<div *ngIf="messageType=='info'" class="alert alert-info ">
+    <a  class="close" (click)="hide()" aria-label="close">&times;</a>
+    <strong>Info </strong> {{message}}
+</div>
+<div *ngIf="messageType=='success'" class="alert alert-success ">
+    <a class="close" (click)="hide()" aria-label="close">&times;</a>
+    <strong>Success </strong> {{message}}
+</div>

@@ -1,0 +1,57 @@
+﻿<div class="container-fluid">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 container">
+        <form class="form-horizontal" (ngSubmit)="onAddConceptButton()">
+            <fieldset>
+                <legend>Add Concept</legend>
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width">Concept ID</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <input type="text" name="concept.name"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" 
+                            [(ngModel)]="concept.name" class="form-control"
+                            validationModel='{ "id":"conceptId", "required":true, "minLength":8, "lengthResultText":"Field must be at least 8 digits long." }'>
+                    </div>
+                </div>
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width">Type</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <select class="form-control" name="concept.conceptTypeID"
+                            [(ngModel)]="concept.conceptTypeID"
+                            (ngModelChange)="onConceptTypeChange($event)"  
+                            validationModel='{ "id":"conceptType", "required":true }'>
+                            <option *ngFor="let conceptType of conceptTypes" [ngValue]="conceptType.conceptTypeID">
+                                {{conceptType.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width">Sequence</label>
+                    <div class="col-md-4 right-data-padding right-data-width">
+                        <sequence-editor [customValidationFunction]="validateSequence" validationModel='{ "id":"sequence", "required":true, "customValidationResultText":"Sequence must be specific letters only - always uppercase:<br>DNA: ATCG<br>RNA: AUCG<br>Protein: ARNDCEQGHILKMFPSTWYV"}'></sequence-editor>
+                    </div>
+                </div>
+
+                <div class="form-group container">
+                    <label class="col-md-4 control-label left-data-padding left-data-width sub-header" style="border: 0px;">Custom properties</label>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <custom-properties [customValidationFunction]="validateCustomProperties" validationModel='{ "id":"customProperties" , "resultVisible":"false" }'></custom-properties>
+                </div>
+
+                <div class="form-group right-button-group">                    
+                    <button (click)="cancel()" type="button" class="btn btn-secondary" style="margin-left: 10px;">Cancel</button>
+                    <button type="submit" class="btn btn-primary">OK</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>

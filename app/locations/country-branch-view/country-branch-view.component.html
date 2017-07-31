@@ -1,0 +1,19 @@
+<h4 class="branch-header" [class.current-node]="isCurrentPath()" (click)="onBranchHeaderClick()">
+
+        <span *ngIf="!isEmpty()">
+            <i *ngIf="!isExpanded" class="material-icons pull-xs-left">keyboard_arrow_right</i>
+            <i *ngIf="isExpanded" class="material-icons pull-xs-left">keyboard_arrow_down</i>
+            {{ country.name }}
+        </span>
+
+        <span class="header-for-empty-branch" *ngIf="isEmpty()">
+            {{ country.name }}
+        </span>
+
+        <i class="addNewLocation" (click)="onAddLocationIconClick()">add</i>
+</h4>
+
+<ul *ngIf="isExpanded">
+    <li city-branch-view *ngFor="let city of country.cities" [city]="city">
+    </li>
+</ul>

@@ -1,0 +1,40 @@
+<div class='panel panel-primary customProperties-table'>
+
+    <div class="customProperties">
+        <table class='table' *ngIf='customProperties && customProperties.length'>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let customProperty of customProperties; let isOdd=odd; let isEven=even; let i=index' [class.odd]="isOdd" [class.even]="isEven"
+                    [class.hidden]="customProperty.isDeleted">
+                    <td width="40%">
+                        <div>
+                            <input name="custom-property-name" type="text" class="form-control" [(ngModel)]="customProperty.name"
+                                [disabled]="readonly" validationModel='{ "id":"customPropertyName_{{i}}", "required":true }'>
+                        </div>
+                    </td>
+                    <td width="auto" style="padding-right: 0px;">
+                        <input name="custom-property-value" type="text" class="form-control" [(ngModel)]="customProperty.value" [disabled]="readonly ||  !customProperty.name">
+                    </td>
+                    <td width="3%" style="padding-right:0px;">
+                        <a class='btn' [hidden]="readonly" style="background-image: url(/images/clear_icon.png); background-position: center; 
+                        background-color: transparent; background-repeat: no-repeat; height: 30px;" (click)="deleteProperty(customProperty)">
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-2" style="float: left">
+        <a class="btn btn-info btn-sm" [hidden]="readonly" (click)="addProperty()">
+                    Add a new property
+                </a>
+    </div>
+</div>

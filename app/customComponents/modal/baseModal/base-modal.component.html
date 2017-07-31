@@ -1,0 +1,20 @@
+<div class="modal fade" [attr.id]="modalID" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" [style.width.px]="width || 600">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{ title }}</h4>
+            </div>
+            <div class="modal-body">
+                <ng-content></ng-content>               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="onConfirmClick($event)" *ngIf="config.yesButton">{{config.yesButtonCaption}}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" *ngIf="config.cancelButton">{{config.cancelButtonCaption}}</button>
+            </div>
+        </div>
+    </div>
+</div>

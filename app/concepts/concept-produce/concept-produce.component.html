@@ -1,0 +1,186 @@
+<div class="col-md-6 col-md-offset-3">
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="single" role="tabpanel">
+
+            <form>
+                <fieldset [disabled]="isInputDisabled">
+                    <legend>Produce compound</legend>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">
+                                Concept ID:
+                            </label>
+                        <div class="col-md-3">
+                            <input type="text" value="{{ name }}" class="form-control" disabled>
+                        </div>
+                        <label class="col-md-3 control-label">
+                                Amount [μl]:
+                            </label>
+                        <div class="col-md-3">
+                            <number-input name="numberInputName" [(ngModel)]="amount" validationModel='{ "id":"amount", "required": true }'></number-input>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">Target location:</label>
+                        <div class="col-md-3" >
+                            <select class="form-control" [(ngModel)]="targetFreezer" name="targetFreezer" (ngModelChange)="onTargetFreezerChange()" validationModel='{ "id":"targetFreezer", "required":true }'>
+                                    <option *ngFor="let freezer of freezers" [value]="freezer.freezerID">{{ freezer.name }}</option>
+                                </select>
+                        </div>
+                        <label class="col-md-3 control-label">
+                                Purity [%]:
+                            </label>
+                        <div class="col-md-3">
+                            <input type="number" [(ngModel)]="purity" name="purity" class="form-control" (keypress)="isNumberKey($event)" (change)="isNumberKey()"
+                                (paste)="isNumberKey()" validationModel='{ "id":"purity", "required":true }'>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">
+                                Target container type:
+                            </label>
+                        <div class="col-md-3">
+                            <select class="form-control" [(ngModel)]="selectedContainerType" name="selectedContainerType" (ngModelChange)="onContainerTypeChange()"
+                                validationModel='{ "id":"selectedContainerType", "required":true }'>
+                                    <option *ngFor="let containerType of containerTypes" [ngValue]="containerType">{{containerType.name}}</option>
+                                </select>
+                        </div>
+                        <label class="col-md-3 control-label">
+                                Production date:
+                            </label>
+                        <div class="col-md-3">
+                            <input id="production-date" type="text" class="form-control" [(ngModel)]="productionDate" name="productionDate" disabled
+                                validationModel='{ "id":"productionDate", "required":true }'>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" *ngIf="selectedContainerType && selectedContainerType.containerTypeID === 1">
+                        <label class="col-md-4">Plate from a magazine</label>
+                        <div class="col-md-7">
+                            <bootstrap-switch [defaultValue]="plateFromMagazine" (onChange)="onSwitchPlateTargetChange()"></bootstrap-switch>
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        
+                        <label class="col-md-3 control-label"> Container barcode:</label>
+                        <div class="col-md-3" *ngIf="selectedContainerType && selectedContainerType.containerTypeID === 1 && !plateFromMagazine">
+                            
+                            <!--[customValidationFunction]="destinationFreezerRackValidation" 
+                                validationModel='{ "id":"model.destinationFreezerRack", "customValidationResultText": "Field is required." }-->
+                            <label *ngIf="freezerPlates.length <= 0">No Plates in this freezer</label>
+                            <select class="form-control"  *ngIf="freezerPlates.length > 0"
+                                [(ngModel)]="destinationFreezerPlate" name="destinationFreezerPlate"
+                                (ngModelChange)="loadOccupancyForPlate()">                                                                
+                                <option *ngFor="let plate of freezerPlates" [ngValue]="plate">{{plate.barCode}}</option>
+                            </select>
+                        </div>
+                                                                
+                        <div class="col-md-3" *ngIf="selectedContainerType && selectedContainerType.containerTypeID === 3 || plateFromMagazine">
+                            <autocomplete #containerBarcode [allowedPrefixes]="['vl', 'pl']" 
+                                (change)="onContainerBarcodeChange($event);"
+                                (close)="onContainerBarcodeClose($event);"
+                                [customValidationFunction]="validateContainerBarcode" 
+                                validationModel='{ "id":"targetContainerBarcode", "required":true, "customValidationResultText": "Field is required." }'></autocomplete>
+                        </div>
+                        <label class="col-md-3 control-label">
+                                Expiration date:
+                            </label>
+                        <div class="col-md-3">
+                            <input id="expiration-date" class="form-control calendar" data-mindate=today data-timeFormat="y:m:d" validationModel='{ "id":"expirationDate", "required":true }'>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" *ngIf="selectedContainerType && selectedContainerType.containerTypeID === 3">
+                        <label class="col-md-4">Select rack for vial</label>
+                        <div class="col-md-7">
+                            <bootstrap-switch [defaultValue]="targetRackRequired" (onChange)="onSelectRackChange()"></bootstrap-switch>
+                        </div>
+                    </div>
+
+                    <div *ngIf="targetRackRequired && selectedContainerType && selectedContainerType.containerTypeID === 3">                    
+                        <div class="form-group row">
+                            <label class="col-md-3 col-md-offset-3 control-label">
+                                    <input type="radio" name="rackSource" (change)="onRackSourceChange(1)" value="rackFromFreezer" [attr.checked]="rackFromFreezer ? true : null">
+                                    from given freezer
+                                </label>
+                            <label class="col-md-3 control-label">
+                                    <input type="radio" name="rackSource" (change)="onRackSourceChange(2)" value="rackFromMagazine" [attr.checked]="rackFromMagazine ? true : null">
+                                    new - from magazine
+                                </label>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label">
+                                    Rack barcode:
+                                </label>
+
+                                <div class="col-md-6" *ngIf="rackFromFreezer">
+                                    <!--Temporary implemented in a such way because of bug in Angular RC5 -->
+                                    <select class="form-control" *ngIf="freezerRacks.length === 0" disabled>
+                                        <option disabled selected>There are no racks in freezer</option>
+                                    </select>
+                                    <select class="form-control"  *ngIf="freezerRacks.length > 0"
+                                        [(ngModel)]="destinationFreezerRack" name="destinationFreezerRack"
+                                        (ngModelChange)="loadOccupancyForRack()" [disabled]="!freezerRacks.length"
+                                        [customValidationFunction]="destinationFreezerRackValidation" 
+                                        validationModel='{ "id":"model.destinationFreezerRack", "customValidationResultText": "Field is required." }'>
+                                        <!--<option disabled [selected]="!freezerRacks.length" [hidden]="freezerRacks.length">There are no racks in freezer</option>-->
+                                        <option *ngFor="let rack of freezerRacks" [ngValue]="rack">{{rack.barCode}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-6" *ngIf="rackFromMagazine">
+                                <autocomplete #parentContainerBarcode [allowedPrefixes]="['rc']" [customValidationFunction]="validateContainerRackBarcode"
+                                    [initialValue]="'rc'" [transitionId]="1" (change)="onParentContainerBarcodeChange($event);" validationModel='{ "id":"targetRackBarcode", "required":true, "customValidationResultText": "Field is required." }'></autocomplete>
+                            </div>
+                        </div>
+                    </div>                    
+
+                    <div *ngIf="targetRackRequired && selectedContainerType && selectedContainerType.containerTypeID === 3 && refresh==false"
+                        class="form-group row">
+                        <label class="col-md-3 control-label">
+                                Specify vial position in rack:
+                            </label>
+                        <div class="col-md-6">
+                            <layout-map-view [layoutMap]="layoutMapForRack" validationModel='{ "id":"layoutMapForRack", "required":true }'></layout-map-view>
+                        </div>
+                    </div>
+
+                    <div *ngIf="selectedContainerType && selectedContainerType.containerTypeID === 1  &&refresh==false" class="form-group row">
+                        <label class="col-md-3 control-label">
+                                Specify well in plate:
+                            </label>
+                        <div class="col-md-6">
+                            <layout-map-view [layoutMap]="layoutMapForPlate" validationModel='{ "id":"layoutMapForPlate", "required":true }'></layout-map-view>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">Custom properties:</label>
+                        <div *ngIf='customProperties && customProperties.length===0'>
+                            No custom properties
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="form-group">
+                            <custom-properties></custom-properties>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <button type="button" class="btn btn-primary" (click)="onProduceAndAddButton()">Submit and produce next</button>
+                        <button type="button" class="btn btn-primary" (click)="onProduceButton()">Submit</button>
+                        <button (click)="onCancelButton()" type="button" class="btn btn-secondary">Cancel</button>
+                    </div>
+
+                </fieldset>
+            </form>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<nav class="navbar nav-inline navbar-dark bg-inverse">
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+        &#9776;
+    </button>
+
+    <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+
+        <a class="navbar-brand" routerLink="">
+            <img width="163" src="images/logo.png" />
+        </a>
+
+        <ul class="nav navbar-nav">
+
+            <li *ngIf="isAuthenticated" class="nav-item">
+                <a class="nav-link" routerLink="/locations" routerLinkActive="active">Locations</a>
+            </li>
+            <li *ngIf="isAuthenticated" class="nav-item">
+                <a class="nav-link" routerLink="/containers" routerLinkActive="active">Containers</a>
+            </li>
+            <li *ngIf="isAuthenticated" class="nav-item">
+                <a class="nav-link" routerLink="/concepts" routerLinkActive="active">Concepts</a>
+            </li>
+
+            <li *ngIf="isAuthenticated" class="nav-item nav-right">
+                <a class="nav-link cursor-pointer" (click)="onLogOutLinkClick()">(Log Out)</a>
+            </li>
+
+            <li *ngIf="isAuthenticated" class="nav-item btn-group nav-right cursor-pointer">
+                <a id="userDetailsDropdown" class="dropdown-toggle nav-link" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ getNameSurname() }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                    <a class="dropdown-item disabled"> Location: {{ getOfficeName() }} </a>
+                    <a class="dropdown-item disabled"> Role: {{ getRoleName() }} </a>
+                </div>
+            </li>
+
+            <li *ngIf="isAuthenticated && isAdmin" class="nav-right">
+                <a class="nav-link" routerLink="/administration" routerLinkActive="active">Administration</a>
+            </li>
+
+            <li *ngIf="!isAuthenticated" class="nav-item nav-right">
+                <a class="nav-link cursor-pointer" (click)="onLogInLinkClick()">(Log In)</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>

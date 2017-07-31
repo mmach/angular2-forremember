@@ -1,0 +1,23 @@
+.navbar-dark .navbar-nav .nav-link {
+    color: #e8e8e8;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 1rem;
+}
+
+.navbar-brand {
+    padding-top: 0.2rem;
+}
+
+.nav-right {
+    float: right;
+}
+
+nav a.active {
+    font-weight: bold;
+}

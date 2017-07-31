@@ -1,0 +1,20 @@
+<h6 class="branch-header" (click)="onBranchHeaderClick()" [class.current-node]="isCurrentPath()">
+
+        <span *ngIf="!isEmpty()">
+            <i *ngIf="!isExpanded" class="material-icons pull-xs-left">keyboard_arrow_right</i>
+            <i *ngIf="isExpanded" class="material-icons pull-xs-left">keyboard_arrow_down</i>
+            {{ office.name }}
+        </span>
+
+        <span class="header-for-empty-branch" *ngIf="isEmpty()">
+            {{ office.name }}
+        </span>
+
+        <i class="addNewLocation" (click)="onAddLocationIconClick()">add</i>
+</h6>
+
+<ul *ngIf="isExpanded">
+    <li *ngFor="let freezer of office.freezers" (click)="onBranchLeafClick(freezer)" class="freezer-header" [class.current-node]="isCurrentPathFreezer(freezer.freezerID)">
+        {{ freezer.name}}
+    </li>
+</ul>

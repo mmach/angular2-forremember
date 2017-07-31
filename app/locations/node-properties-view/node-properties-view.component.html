@@ -1,0 +1,94 @@
+
+<div class="locationDetails">
+
+    <!--<img class="card-img-top" data-src="..." alt="Card image cap">-->
+    <div class="card-block">
+
+
+        <div [ngSwitch]="nodeType">
+
+            <template ngSwitchDefault>
+                <div >
+                        Please select location to see the details.
+                </div>
+            </template>
+
+            <template ngSwitchCase="Country">
+                <ul class="list-group list-group-flush">
+                    <h4 class="card-title">
+                        <i class="material-icons">flag</i>
+                        {{ locationData.name }}
+                    </h4>
+                    <li class="list-group-item">
+                        <button type="button" class="btn btn-primary container" (click)="onEditButton()">
+                            Edit
+                        </button>
+                        <button class="btn btn-secondary text-center" (click)="onDeleteButton()">
+                            Delete
+                        </button>
+                    </li>
+                </ul>
+            </template>
+
+            <template ngSwitchCase="City">
+                <ul class="list-group list-group-flush">
+                    <h4 class="card-title">
+                        <i class="material-icons">location_city</i>
+                        {{ locationData.name }}
+                    </h4>
+                    <li class="list-group-item">
+                        <button type="button" class="btn btn-primary container" (click)="onEditButton()">
+                            Edit
+                        </button>
+                        <button class="btn btn-secondary text-center" (click)="onDeleteButton()">
+                            Delete
+                        </button>
+                    </li>
+                </ul>
+            </template>
+
+            <template ngSwitchCase="Office">
+                <ul class="list-group list-group-flush">
+                    <h4 class="card-title">
+                        <i class="material-icons">business_center</i>
+                        {{ locationData.name }}
+                    </h4>
+                    <li class="list-group-item">
+                        Office address: {{ locationData.address}}
+                    </li>
+                    <li class="list-group-item">
+                        <button type="button" class="btn btn-primary container" (click)="onEditButton()">
+                            Edit
+                        </button>
+                        <button class="btn btn-secondary text-center" (click)="onDeleteButton()">
+                            Delete
+                        </button>
+                    </li>
+                </ul>
+            </template>
+
+            <template ngSwitchCase="Freezer">
+                <ul class="list-group list-group-flush">
+                    <h4 class="card-title">
+                        <i class="material-icons">ac_unit</i>
+                        {{ locationData.name }}
+                    </h4>
+                    <li class="list-group-item">
+                        Temperature: {{ locationData.temperature }} C°
+                    </li>
+                    <li class="list-group-item">
+                        Capacity: {{ locationData.capacity }}
+                    </li>
+                    <li class="list-group-item">
+                        <button type="button" class="btn btn-primary container" (click)="onEditButton()">
+                            Edit
+                        </button>
+                        <button class="btn btn-secondary text-center" (click)="onDeleteButton()">
+                            Delete
+                        </button>
+                    </li>
+                </ul>
+            </template>
+        </div>
+    </div>
+</div>

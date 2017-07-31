@@ -1,0 +1,55 @@
+div 
+{
+    margin-left: 0px;
+	margin-right: 0px;
+    padding-left: 0px;
+	padding-right: 0px;
+}
+
+button 
+{
+	width: 100px;
+	float: right;
+	margin-bottom: 10px
+}
+
+legend 
+{
+	border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(236, 238, 239);
+	margin-bottom: 3rem;
+
+
+}
+
+.left-data-padding 
+{
+	margin-left: 0px;
+    padding-left: 0px;	
+}
+
+.left-data-width
+{
+    width:30%;
+}
+
+.right-data-padding
+{	
+	padding-right: 0px;
+}
+
+.right-data-width
+{
+    width: 70%;
+}
+
+.sub-header
+{
+	border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(236, 238, 239);	
+	margin-top: 3rem;
+	margin-bottom: 0;
+	font-weight: bold;
+}

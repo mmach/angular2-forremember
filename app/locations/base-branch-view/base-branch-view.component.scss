@@ -1,0 +1,42 @@
+ul
+{
+    list-style-type: none;
+}
+
+.branch-header, .freezer-header
+{
+    cursor: pointer;
+}
+
+.add-location-icon
+{
+    float:right;
+}
+
+.header-for-empty-branch
+{
+    margin-left: 24px;
+}
+
+.addNewLocation {
+    float: right;
+    font-style: normal;
+    visibility: hidden;
+}
+
+.branch-header:hover {
+    font-weight: bold;
+
+    .addNewLocation {
+        visibility: visible;
+    }
+}
+
+.freezer-header:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.current-node {
+    color: #00ADEF;
+}

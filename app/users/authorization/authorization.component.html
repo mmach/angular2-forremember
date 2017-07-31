@@ -1,0 +1,14 @@
+
+<br/>
+<div class="container-fluid">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div *ngIf="errorMessage!=null" class="alert alert-danger">
+            <strong>Error </strong> {{errorMessage}}
+        </div>
+        <div *ngIf="result!=null" class="alert alert-success">
+            <strong>Success </strong> {{result}}
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>

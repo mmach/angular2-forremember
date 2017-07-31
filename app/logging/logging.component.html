@@ -1,0 +1,18 @@
+﻿<table>
+    <thead>
+        <tr>
+            <!--<th style="width:16%">Barcode</th>--> 
+            <th style="width:16%">Log item</th>            
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let log of logList; let isOdd=odd; let isEven=even' class="logTableRow"
+            [class.odd]="isOdd"
+            [class.even]="isEven">
+            <td>
+             {{ log }}   
+            </td>
+        </tr>
+        
+    </tbody>
+</table>

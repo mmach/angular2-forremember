@@ -1,0 +1,48 @@
+<div [ngClass]="{ 'small-text': smallText }">
+    <div class="modal fade" [attr.id]="modalID" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="cursor: move;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">{{ title }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div *ngFor='let text of texts'>
+                        {{ text }}
+                    </div>
+
+                    <div *ngIf="isConfirmDialog && confirmDialogProperties.showReasonArea">
+                        <hr />
+                        <form>
+                            <div class="form-group">
+                                <label class="control-label" style="font-weight: 600;">Reason:</label>
+                                <div *ngIf="confirmDialogProperties.showPredefinedReasons" style="margin-bottom: 10px">
+                                    <select name="selected-predefined-reason-text" class="form-control" [(ngModel)]="confirmDialogProperties.selectedPredefinedReasonText"
+                                        (change)="onReasonChange()">
+                                        <option>another reason</option>
+                                        <option class="PredefinedReasonText" *ngFor="let predefinedReason of confirmDialogProperties.predefinedReasonList">{{predefinedReason}}</option>
+                                    </select>
+                                </div>
+                                <textarea name="reason-text" [readonly]="confirmDialogProperties._isPredefinedReasonTextReadonly ? true : null" [(ngModel)]="confirmDialogProperties.reasonText"
+                                    class="form-control" [class.has-warning]="noReason==true" placeholder="{{reasonPlaceholder()}}">
+                                </textarea>
+                                <div *ngIf="noReason==true" class="form-control-label" style="padding: 0px; color: #f0ad4e;">
+                                    <i class="material-icons warning-icon" style="float: left;font-size:24px">warning</i>Provide the reason
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button *ngIf="isConfirmDialog" type="button" class="btn btn-primary" (click)="onConfirmClick($event)">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{isConfirmDialog ? "Cancel" : "Close"}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
